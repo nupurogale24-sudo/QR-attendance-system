@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Attendance System</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8fafc;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: #ffffff;
+            padding: 3rem 4rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+            border: 1px solid #e2e8f0;
+            text-align: center;
+        }
+        h1 {
+            color: #0f172a;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.025em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>QR Code Attendance System</h1>
+        <br>
+        <p><a href="/qr">View Attendance QR Code</a></p>
+        <p><a href="/attendance">Mark Attendance Directly</a></p>
+        <p><a href="/teacher">Teacher Dashboard</a></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mark Attendance</title>
+</head>
+<body>
+    <h1>Mark Attendance</h1>
+
+    <!-- Display session name if available -->
+    <h2 th:if="${attendanceSession}" th:text="${attendanceSession.sessionName}"></h2>
+
+    <!-- Display session error (not found or closed) -->
+    <p th:if="${sessionError}" th:text="${sessionError}" style="color: red; font-weight: bold;"></p>
+
+    <!-- Display message when present (success or duplicate warning) -->
+    <p th:if="${message}" 
+       th:text="${message}" 
+       th:style="${isError} ? 'color: red; font-weight: bold;' : 'color: green; font-weight: bold;'"></p>
+
+    <!-- Form is displayed if there is no session error -->
+    <form th:if="${sessionError == null}" 
+          th:action="${attendanceSession != null} ? @{/attendance/{id}(id=${attendanceSession.id})} : @{/attendance}" 
+          method="post">
+        <div>
+            <label for="studentId">Student ID:</label>
+            <input type="text" id="studentId" name="studentId" required>
+        </div>
+        <br>
+        <div>
+            <label for="studentName">Student Name:</label>
+            <input type="text" id="studentName" name="studentName" required>
+        </div>
+        <br>
+        <button type="submit">Mark Attendance</button>
+    </form>
+</body>
+</html>

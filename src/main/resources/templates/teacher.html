@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Dashboard</title>
+</head>
+<body>
+    <h1>Teacher Dashboard</h1>
+
+    <h2>Create Attendance Session</h2>
+
+    <!-- Success or error messages -->
+    <p th:if="${message}" th:text="${message}" style="color: green; font-weight: bold;"></p>
+    <p th:if="${error}" th:text="${error}" style="color: red; font-weight: bold;"></p>
+
+    <!-- Created session details -->
+    <div th:if="${createdSession}">
+        <h3>Created Session Details:</h3>
+        <p><strong>Session ID:</strong> <span th:text="${createdSession.id}"></span></p>
+        <p><strong>Session Name:</strong> <span th:text="${createdSession.sessionName}"></span></p>
+        <p><strong>Start Time:</strong> <span th:text="${createdSession.startTime}"></span></p>
+        <p><strong>Active:</strong> <span th:text="${createdSession.active}"></span></p>
+        <p th:if="${createdSession.endTime != null}"><strong>End Time:</strong> <span th:text="${createdSession.endTime}"></span></p>
+        <p><strong>Students Present:</strong> <span th:text="${attendanceCounts != null and attendanceCounts[createdSession.id] != null ? attendanceCounts[createdSession.id] : 0}">0</span></p>
+        <br>
+        <p>
+            <a th:href="@{/qr/{id}(id=${createdSession.id})}">Generate QR Code</a> | 
+            <a th:href="@{/teacher/session/{id}/attendance(id=${createdSession.id})}">View Attendance</a>
+        </p>
+    </div>
+
+    <form th:action="@{/teacher}" method="post">
+        <div>
+            <label for="sessionName">Session Name:</label>
+            <input type="text" id="sessionName" name="sessionName" required>
+        </div>
+        <br>
+        <button type="submit">Create Session</button>
+    </form>
+
+    <hr>
+
+    <!-- List of all sessions -->
+    <div th:if="${sessions != null and not #lists.isEmpty(sessions)}">
+        <h2>Existing Attendance Sessions</h2>
+        <ul>
+            <li th:each="sess : ${sessions}" style="margin-bottom: 10px;">
+                <strong th:text="${sess.sessionName}"></strong> (ID: <span th:text="${sess.id}"></span>) - 
+                <span>Active: <span th:text="${sess.active}"></span></span>
+                <span th:if="${sess.endTime != null}"> | End Time: <span th:text="${sess.endTime}"></span></span>
+                | <span>Students Present: <span th:text="${attendanceCounts != null and attendanceCounts[sess.id] != null ? attendanceCounts[sess.id] : 0}">0</span></span>
+                <br>
+                <a th:href="@{/qr/{id}(id=${sess.id})}">Generate QR Code</a> | 
+                <a th:href="@{/teacher/session/{id}/attendance(id=${sess.id})}">View Attendance</a>
+                <span th:if="${sess.active}">
+                    | 
+                    <form th:action="@{/teacher/session/{id}/close(id=${sess.id})}" method="post" style="display:inline;">
+                        <button type="submit">Close Session</button>
+                    </form>
+                </span>
+            </li>
+        </ul>
+    </div>
+
+    <br>
+    <a href="/">Back to Home</a>
+</body>
+</html>

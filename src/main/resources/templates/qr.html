@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance QR Code</title>
+</head>
+<body>
+    <h1>Scan QR Code for Attendance</h1>
+
+    <!-- Display session name if available -->
+    <h2 th:if="${attendanceSession}" th:text="${attendanceSession.sessionName}"></h2>
+
+    <div th:if="${qrCodeImage}">
+        <!-- Render the generated QR code image -->
+        <img th:src="${qrCodeImage}" alt="Attendance QR Code">
+    </div>
+
+    <p th:if="${error}" th:text="${error}" style="color: red; font-weight: bold;"></p>
+
+    <p th:if="${attendanceUrl}">Target URL: <a th:href="${attendanceUrl}" th:text="${attendanceUrl}">http://localhost:8080/attendance</a></p>
+
+    <br>
+    <a href="/">Back to Home</a>
+</body>
+</html>

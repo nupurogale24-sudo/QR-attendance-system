@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Session Attendance Records</title>
+</head>
+<body>
+    <h1>Session Attendance Records</h1>
+
+    <!-- Display Session Info -->
+    <div th:if="${attendanceSession}">
+        <p><strong>Session Name:</strong> <span th:text="${attendanceSession.sessionName}"></span></p>
+        <p><strong>Session ID:</strong> <span th:text="${attendanceSession.id}"></span></p>
+        <p><strong>Session Start Time:</strong> <span th:text="${attendanceSession.startTime}"></span></p>
+    </div>
+
+    <p th:if="${error}" th:text="${error}" style="color: red; font-weight: bold;"></p>
+
+    <h2>Student Attendance List</h2>
+
+    <!-- If no attendance records exist for this session -->
+    <p th:if="${attendanceRecords == null or #lists.isEmpty(attendanceRecords)}">No attendance records yet.</p>
+
+    <!-- Display attendance table if records exist -->
+    <table border="1" th:if="${attendanceRecords != null and not #lists.isEmpty(attendanceRecords)}">
+        <thead>
+            <tr>
+                <th>Student ID</th>
+                <th>Student Name</th>
+                <th>Attendance Date/Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="record : ${attendanceRecords}">
+                <td th:text="${record.studentId}"></td>
+                <td th:text="${record.studentName}"></td>
+                <td th:text="${record.attendanceTime}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <a href="/teacher">Back to Teacher Dashboard</a>
+</body>
+</html>
