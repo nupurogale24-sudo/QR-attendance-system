@@ -10,7 +10,10 @@ import java.util.List;
 @Repository
 public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
 
-    // Check if an attendance record exists for a studentId between startOfDay and endOfDay
+    // Check if an attendance record exists for a student in a specific session
+    boolean existsBySessionIdAndStudentId(Long sessionId, String studentId);
+
+    // Check if an attendance record exists for a studentId between startOfDay and endOfDay (legacy)
     boolean existsByStudentIdAndAttendanceTimeBetween(String studentId, LocalDateTime startOfDay, LocalDateTime endOfDay);
 
     // Find all attendance records for a specific session ID
@@ -18,4 +21,7 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
 
     // Count attendance records for a specific session ID
     long countBySessionId(Long sessionId);
+
+    // Find all attendance records for a specific student, most recent first
+    List<Attendance> findByStudentIdOrderByAttendanceTimeDesc(String studentId);
 }
